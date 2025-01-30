@@ -10,7 +10,7 @@ from .serializers import (
 )
 
 
-class ProfileListCreateView(generics.ListCreateAPIView):
+class ProfileListCreateView(generics.ListAPIView):
     """View to list and create profiles."""
 
     queryset = Profile.objects.all()
