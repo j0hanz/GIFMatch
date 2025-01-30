@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
-    """User profile with personal info and image."""
+    """Model representing a user profile."""
 
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = CloudinaryField(
@@ -30,19 +30,20 @@ class Profile(models.Model):
 
 @receiver(post_save, sender=User)
 def create_or_update_profile(
-    sender: Any,
-    instance: Any,
-    created: bool,
-    **kwargs: dict,
+    sender: Any, instance: User, created: bool, **kwargs: dict
 ) -> None:
-    """Create or update profile when user is created or updated."""
+    """Create or update a profile when a user is saved."""
     if created:
         Profile.objects.create(owner=instance)
-    else:
+    elif hasattr(instance, 'profile'):
         instance.profile.save()
+    else:
+        Profile.objects.create(owner=instance)
 
 
 class Game(models.Model):
+    """Model representing a game."""
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     moves = models.IntegerField()
     time_taken = models.IntegerField()
@@ -53,6 +54,8 @@ class Game(models.Model):
 
 
 class Leaderboard(models.Model):
+    """Model representing a leaderboard entry."""
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     best_moves = models.IntegerField()
     best_time = models.IntegerField()

@@ -4,12 +4,12 @@ from rest_framework.views import APIView
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
-    """Allows read-only access unless owner is requesting write."""
+    """Permission to only allow owners to edit objects."""
 
     def has_object_permission(
         self, request: Request, view: APIView, obj: object
     ) -> bool:
-        return (
-            request.method in permissions.SAFE_METHODS
-            or getattr(obj, 'owner', None) == request.user
-        )
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        owner = getattr(obj, 'owner', getattr(obj, 'user', None))
+        return owner == request.user
