@@ -22,10 +22,27 @@ DEBUG = IS_DEV
 
 # Allowed Hosts
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-if not IS_DEV:
-    prod_host = os.getenv('ALLOWED_HOST')
-    if prod_host:
-        ALLOWED_HOSTS.append(prod_host)
+
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.codeinstitute-ide.net',
+    'https://*.herokuapp.com',
+    'http://localhost:5173',
+]
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'https://*.codeinstitute-ide.net',
+    'https://*.herokuapp.com',
+    'http://localhost:5173',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r'^https://.*\.codeinstitute-ide\.net$',
+]
 
 # Installed Apps
 INSTALLED_APPS = [
@@ -119,10 +136,6 @@ REST_FRAMEWORK = {
 }
 
 SITE_ID = 1
-
-# CORS
-CORS_ALLOW_CREDENTIALS = True
-CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization and Localization
 LANGUAGE_CODE = 'en-us'
