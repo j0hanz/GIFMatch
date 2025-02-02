@@ -2,12 +2,13 @@ import { ReactNode } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { HiArrowPath } from 'react-icons/hi2';
 import { TbDoorExit } from 'react-icons/tb';
-import styles from './styles/Modal.module.css';
 import Scoreboard from '@/data/scoreData';
 import InstructionsData from '@/data/instructionsData';
-import { handleButtonClick } from '@/utils/soundManager';
 import CommitStatus from './CommitStatus';
+import { handleButtonClick } from '@/utils/soundManager';
+import styles from './styles/Modal.module.css';
 
+// Interfaces
 interface ScoreboardModalProps {
   show: boolean;
   onClose: () => void;
@@ -18,6 +19,16 @@ interface ScoreboardModalProps {
   score: number;
   moves: number;
   completedTime: string;
+}
+
+interface GameInstructionsProps {
+  show: boolean;
+  onClose: () => void;
+}
+
+interface LatestUpdatesProps {
+  show: boolean;
+  onClose: () => void;
 }
 
 // Main modal
@@ -67,12 +78,7 @@ export default function ScoreboardModal({
   );
 }
 
-interface GameInstructionsProps {
-  show: boolean;
-  onClose: () => void;
-}
-
-// Game instructions modal
+// Game Instructions
 export function GameInstructions({ show, onClose }: GameInstructionsProps) {
   return (
     <Modal
@@ -94,12 +100,7 @@ export function GameInstructions({ show, onClose }: GameInstructionsProps) {
   );
 }
 
-interface LatestUpdatesProps {
-  show: boolean;
-  onClose: () => void;
-}
-
-// Latest updates modal
+// Latest Updates
 export function LatestUpdates({ show, onClose }: LatestUpdatesProps) {
   return (
     <Modal
